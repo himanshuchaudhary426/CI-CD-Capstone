@@ -1,5 +1,9 @@
 pipeline{
 	agent any
+	environment{
+		USERNAME=credentials('USERNAME')
+		PASSWORD=credentials('PASSWORD')
+	}
 	stages{
 		stage('Compile'){
 			steps{
@@ -28,7 +32,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "kubectl apply -f /home/knoldus/dockerCapstone/http-akka-example.yml"
+				sh "echo deployed"
 			}
 		}
 
