@@ -22,7 +22,8 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/* /home/knoldus/dockerCapstone/"   
+				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/* /home/knoldus/dockerCapstone/" 
+				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
 		} 
