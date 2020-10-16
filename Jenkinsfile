@@ -33,7 +33,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
+				sh "sudo kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
 			}
 		}
 
