@@ -19,7 +19,7 @@ pipeline{
 			}
 			steps{
 				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/* /home/knoldus/dockerCapstone/"   
-				sh "bash /home/knoldus/dockerCapstone/build.sh"
+				sh "/home/knoldus/dockerCapstone/build.sh"
 			}
 		} 
 
