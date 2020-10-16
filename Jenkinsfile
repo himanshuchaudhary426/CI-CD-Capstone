@@ -18,7 +18,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "sbt package"
+				sh "pwd"                                                                                    
 			}
 		}
 	}
