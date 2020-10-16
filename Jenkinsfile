@@ -13,16 +13,24 @@ pipeline{
 			}
 		}
 
-		stage('deploy'){
+		stage('build-image'){
 			when{
 				branch 'production'
 			}
 			steps{
 				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/* /home/knoldus/dockerCapstone/"   
-				sh "sudo cd /home/knoldus/dockerCapstone"
-				sh "sudo docker build -t himanshuchaudhary/http-akka-example:v1 ."
-				sh "sudo docker push himanshuchaudhary/http-akka-example:v1"
+				sh "bash /home/knoldus/dockerCapstone/build.sh"
+			}
+		} 
+
+		stage('deploy'){
+			when{
+				branch 'production'
+			}
+			steps{
+				sh "kubectl apply -f /home/knoldus/dockerCapstone/http-akka-example.yml"
 			}
 		}
+
 	}
 }
