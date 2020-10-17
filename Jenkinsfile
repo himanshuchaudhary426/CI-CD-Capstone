@@ -13,7 +13,16 @@ pipeline{
 
 		stage('Test'){
 			steps{
+				echo "Testing Started"
 				sh "sbt test"
+			}
+			post{
+				success{
+					echo "Testing successful"
+				}
+				failure{
+					echo "Testing failed"
+				}
 			}
 		}
 
@@ -26,13 +35,23 @@ pipeline{
 				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
+			post{
+				success{
+					echo "Build and push Successful"
+				}
+				failure{
+					echo "Build and push failed"
+				}
+			}
 		} 
 
-		stage('deploy'){
+		stage('deploy to production'){
 			when{
 				branch 'production'
 			}
 			steps{
+				withKubeConfig([credentialsId: 'kube-config',serverUrl: 'https://172.17.0.3:8443'
+                    ]) {
 				sh "sudo kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
 			}
 		}
