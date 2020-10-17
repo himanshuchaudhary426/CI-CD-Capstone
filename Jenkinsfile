@@ -13,15 +13,15 @@ pipeline{
 
 		stage('Test'){
 			steps{
-				echo "Testing Started"
+				sh "echo Testing Started"
 				sh "sbt test"
 			}
 			post{
 				success{
-					echo "Testing successful"
+					sh "echo Testing successful"
 				}
 				failure{
-					echo "Testing failed"
+					sh "echo Testing failed"
 				}
 			}
 		}
@@ -37,10 +37,10 @@ pipeline{
 			}
 			post{
 				success{
-					echo "Build and push Successful"
+					sh "echo Build and push Successful"
 				}
 				failure{
-					echo "Build and push failed"
+					sh "echo Build and push failed"
 				}
 			}
 		} 
