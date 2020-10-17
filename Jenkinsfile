@@ -52,7 +52,7 @@ pipeline{
 			steps{
 				withKubeConfig([credentialsId: 'kube-config',serverUrl: 'https://35.184.199.104', contextName: 'google-cloud-cluster'
                     ]) {
-				sh "sudo kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
+				sh "kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
 			}
 		}
 
