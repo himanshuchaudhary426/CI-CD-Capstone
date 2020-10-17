@@ -50,7 +50,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				withKubeConfig([credentialsId: 'kube-config',serverUrl: 'https://172.17.0.3:8443', contextName: 'minikube'
+				withKubeConfig([credentialsId: 'kube-config',serverUrl: 'https://35.184.199.104', contextName: 'google-cloud-cluster'
                     ]) {
 				sh "sudo kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
 			}
