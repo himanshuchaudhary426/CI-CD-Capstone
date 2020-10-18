@@ -73,10 +73,17 @@ pipeline{
 				sh "echo in developing"
 			}
 			post{
-				always{
+				success{
 					emailext ( 
 						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
-						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.',
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. New image build and pushed successfully to dockerhub.',
+						to : 'himanshuchaudhary426@gmail.com'
+						)
+				}
+				failure{
+					emailext ( 
+						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. Current build failed.',
 						to : 'himanshuchaudhary426@gmail.com'
 						)
 				}
