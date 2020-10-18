@@ -25,13 +25,30 @@ pipeline{
 				}
 			}
 		}
+		stage('packaging')
+		{
+			steps{
+				sh "echo packaging the jar"
+				sh "sbt assembly"
+			}
+			post
+			{
+				success{
+					sh "echo packaging successfull"
+				}
+				failure{
+					sh "echo packaging failed"
+				}
+			}
+		}
 
 		stage('build-image'){
 			when{
 				branch 'production'
 			}
 			steps{
-				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/* /home/knoldus/dockerCapstone/" 
+				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/target/scala-2.11/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/jarfiles" 
+				sh "sudo cp /home/knoldus/dockerCapstone/jarfiles/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/oldjars"
 				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
@@ -50,9 +67,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				withKubeConfig([credentialsId: 'kube-config',serverUrl: 'https://35.184.199.104', contextName: 'google-cloud-cluster'
-                    ]) {
-				sh "kubectl apply -f /home/knoldus/dockerCapstone/http-akka-project.yml"
+				sh "echo in developing"
 			}
 		}
 
