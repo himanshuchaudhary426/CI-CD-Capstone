@@ -61,15 +61,25 @@ pipeline{
 			steps{
 				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/target/scala-2.11/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/jarfiles" 
 				sh "sudo cp /home/knoldus/dockerCapstone/jarfiles/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/oldjars"
-				sh "sudo docker login -u ${USERNAME} -p ${PASSWOR}"  
+				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
 			post{
 				success{
 					sh "echo Build and push Successful"
+					emailext ( 
+						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. New image build and pushed successfully to dockerhub.',
+						to : 'himanshuchaudhary426@gmail.com'
+						)
 				}
 				failure{
 					sh "echo Build and push failed"
+					emailext ( 
+						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. Current production build failed.',
+						to : 'himanshuchaudhary426@gmail.com'
+						)
 				}
 			}
 		}
@@ -80,22 +90,6 @@ pipeline{
 			}
 			steps{
 				sh "echo in developing"
-			}
-			post{
-				success{
-					emailext ( 
-						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
-						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. New image build and pushed successfully to dockerhub.',
-						to : 'himanshuchaudhary426@gmail.com'
-						)
-				}
-				failure{
-					emailext ( 
-						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
-						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. Current production build failed.',
-						to : 'himanshuchaudhary426@gmail.com'
-						)
-				}
 			}
 		}
 
