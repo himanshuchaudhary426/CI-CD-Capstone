@@ -60,6 +60,11 @@ pipeline{
 					sh "echo Build and push failed"
 				}
 			}
+		}
+		post{
+			always{
+				emailext
+			}
 		} 
 
 		stage('deploy to production'){
