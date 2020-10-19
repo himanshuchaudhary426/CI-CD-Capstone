@@ -64,7 +64,6 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/target/scala-2.11/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/jarfiles" 
 				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
@@ -92,8 +91,11 @@ pipeline{
 			when{
 				branch 'production'
 			}
+			i
 			steps{
-				sh "echo deploying to kubernetes"
+
+				sh "kubectl apply -f http-akka-example.yml"
+				sh "update.sh"
 			}
 		}
 
