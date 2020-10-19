@@ -93,7 +93,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "deploying to kubernetes"
+				sh "echo deploying to kubernetes"
 			}
 		}
 
