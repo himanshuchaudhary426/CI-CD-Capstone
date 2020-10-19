@@ -1,0 +1,28 @@
+# Deployment
+# http-akka-example.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: http-akka
+  labels:
+    app: http-akka
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: http-akka
+  template:
+    metadata:
+      name: http-akka
+      labels:
+        app: http-akka
+    spec:
+      containers:
+        - name: http-akka-example
+          image: docker.io/himanshuchaudhary/http-akka-project:450d5c4
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+            - name: mycred
