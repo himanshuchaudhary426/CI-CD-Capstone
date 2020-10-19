@@ -91,7 +91,6 @@ pipeline{
 			when{
 				branch 'production'
 			}
-			i
 			steps{
 
 				sh "kubectl apply -f http-akka-example.yml"
