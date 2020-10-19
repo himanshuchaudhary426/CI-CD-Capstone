@@ -31,6 +31,11 @@ pipeline{
 				}
 				failure{
 					sh "echo Testing failed"
+					emailext ( 
+						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results. Current build number testing failed.',
+						to : 'himanshuchaudhary426@gmail.com'
+						)
 				}
 			}
 		}
@@ -60,7 +65,6 @@ pipeline{
 			}
 			steps{
 				sh "sudo cp -r /var/lib/jenkins/workspace/capstone-project_production/target/scala-2.11/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/jarfiles" 
-				sh "sudo cp /home/knoldus/dockerCapstone/jarfiles/akka-http-helloworld-assembly-1.0.jar /home/knoldus/dockerCapstone/oldjars"
 				sh "sudo docker login -u ${USERNAME} -p ${PASSWORD}"  
 				sh "sudo /home/knoldus/dockerCapstone/build.sh"
 			}
@@ -89,7 +93,7 @@ pipeline{
 				branch 'production'
 			}
 			steps{
-				sh "echo in developing"
+				sh "deploying to kubernetes"
 			}
 		}
 
