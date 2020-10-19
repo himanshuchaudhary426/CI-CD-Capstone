@@ -94,7 +94,7 @@ pipeline{
 			steps{
 
 				sh "kubectl apply -f http-akka-example.yml"
-				sh "update.sh"
+				sh "./update.sh"
 			}
 		}
 
