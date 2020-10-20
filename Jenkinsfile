@@ -96,6 +96,21 @@ pipeline{
 				sh "kubectl apply -f http-akka-example.yml"
 				sh "./update.sh"
 			}
+			post{
+				always{
+					emailext ( 
+						subject: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!!', 
+						body: '$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:Check console output at $BUILD_URL to view the results.',
+						to : 'himanshuchaudhary426@gmail.com'
+
+				}
+				success{
+					cleanWs()
+				}
+				failed{
+					sh "echo failed"
+				}
+			}
 		}
 
 	}

@@ -1,4 +1,4 @@
-FROM openjdk:8
+FROM openjdk:8-alpine
 
 WORKDIR ~/http-akka-example
 COPY akka-http-helloworld-assembly-1.0.jar .
